@@ -20,25 +20,25 @@ Para el uso del archivo correspondiente a esta herramienta, debes entrar a la ca
 
 - La primera variable (webHookUrl) la vas a obtener, creando un grupo de chat tipo anuncios en el google chat:
 
-![alt text](images/image.png)
+![alt text](images-readme/image.png)
 
 una vez este creado, debes ir a la parte de configuraciones del espacio, luego a la parte de aplicaciones e integraciones y ahi te encontraras con el apartado de webhooks, procedemos a crear uno
 
-![alt text](images/image3.png)
+![alt text](images-readme/image3.png)
 
 Creando el webhook:
 
-![alt text](images/image4.png)
+![alt text](images-readme/image4.png)
 
 _nota: puedes configurarle un avatar si lo deseas, esto lo puedes hacer dando clic aca --> [GRAVATAR](https://vinicius73.github.io/gravatar-url-generator/#/)_
 
-![alt text](images/image2.png)
+![alt text](images-readme/image2.png)
 
 Una vez creado, copiamos la url y debemos pasarla por el siguiente conversor para que nos funcione sin problema: 
 
 [CONVERSOR](https://onlinelinuxtools.com/escape-shell-characters)
 
-![alt text](images/image5.png)
+![alt text](images-readme/image5.png)
 Ya este es el valor necesario para usarlo en la variable webHookUrl
 
 - Para el siguiente valor el cual es la URL del repositorio de Azure DevOps, debe ponerse la URL del proyecto de Azure DevOps de la siguiente manera:
@@ -49,10 +49,10 @@ Ya este es el valor necesario para usarlo en la variable webHookUrl
 
 Este es el resultado final de la card creada y como se ve notificando:
 
-![alt text](images/image7.png)
+![alt text](images-readme/image7.png)
 
 Tambien notifica cuando el pipeline falla y cuando termina con errores:
 
-![alt text](images/image6.png)
+![alt text](images-readme/image6.png)
 
 _NOTA: El desarrollo de implementacion del boton de Sonarcloud esta en fase beta, una vez haya estabilidad subire la version_
