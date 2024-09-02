@@ -1,0 +1,122 @@
+steps:
+  - task: Bash@3
+    displayName: 'Google Chat Alert'
+    condition: always()
+    inputs:
+      targetType: inline
+      script: |
+          #!/bin/bash
+          # Set variables from arguments
+
+          currentBranch=$(Build.SourceBranchName)
+          buildStatus=$(Agent.JobStatus)
+          buildId=$(Build.BuildId)
+          authorCommit=$(git log -1 --pretty=format:'%an' 2> /dev/null)
+          authorCommitEmail=$(git log -1 --pretty=format:'%ae' 2> /dev/null)
+          commitReference=$(git show -s --format='%h %s' 2> /dev/null)
+          jobName=$(Agent.JobName)          
+          repositoryName=$(Build.Repository.Name)
+
+          #ESTOS 3 VALORES SON ADMINISTRADOS YA SEA AL COMIENZO DEL STAGE O ANTES DE INICIAR ESTE TASK
+          webHookUrl=$(webhook-url)
+          repositoryGroupURL=$(azure-url)
+          stage=$(stage)
+
+
+          case "$buildStatus" in
+          "Succeeded") fontColor="#007E33" ;;
+          "SucceededWithIssues") fontColor="#FF8800" ;;
+          "Failed") fontColor="#CC0000" ;;
+          esac
+
+          case "$buildStatus" in
+          "Succeeded") imageCard="https://img.icons8.com/fluency/240/ok--v1.png" ;;
+          "SucceededWithIssues") imageCard="https://img.icons8.com/color/240/error--v1.png" ;;
+          "Failed") imageCard="https://img.icons8.com/fluency/240/cancel.png" ;;
+          esac
+
+          case "$buildStatus" in
+          "Succeeded") spanish="Completado" ;;
+          "SucceededWithIssues") spanish="Completado con problemas" ;;
+          "Failed") spanish="Falló" ;;
+          esac
+
+          body=$(cat << EOF
+          {
+            "cards": [
+              {
+                "header": {
+                  "title": "Resultado Ejecucion Pipeline ${stage}",
+                  "subtitle": "${repositoryName}",
+                  "imageUrl": "${imageCard}"
+                },
+                "sections": [
+                  {
+                    "widgets": [
+                      {
+                        "textParagraph": {
+                          "text": "<p><font color=\"${fontColor}\">Pipeline ${spanish}</font></p>"
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Rama:",
+                          "content": "${currentBranch}"
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Commit:",
+                          "content": "${commitReference}"
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Autor:",
+                          "content": "${authorCommit} - ${authorCommitEmail}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "widgets": [
+                      {
+                        "buttons": [
+                          {
+                            "textButton": {
+                              "text": "Logs Ejecución",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "${repositoryGroupURL}/_build/results?buildId=${buildId}&view=results"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "textButton": {
+                              "text": "Sonarcloud Analisis",
+                              "onClick": {
+                                "openLink": {
+                                  "url": ""
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+          )
+
+          curl -s -X POST -H 'Content-Type: application/json' "${webHookUrl}" -d "$body"
+
+  
+  
+  
+  
+  
