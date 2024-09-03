@@ -17,7 +17,7 @@ steps:
           jobName=$(Agent.JobName)          
           repositoryName=$(Build.Repository.Name)
 
-          #ESTOS 3 VALORES SON ADMINISTRADOS YA SEA AL COMIENZO DEL STAGE O ANTES DE INICIAR ESTE TASK
+          #THESE 3 VALUES ARE ADMINISTERED EITHER AT THE BEGINNING OF THE STAGE OR BEFORE STARTING THIS TASK
           webHookUrl=$(webhook-url)
           repositoryGroupURL=$(azure-url)
           stage=$(stage)

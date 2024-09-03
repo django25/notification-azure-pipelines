@@ -1,16 +1,16 @@
 # Notificaciones para azure pipelines
 ---
-En este repo vas encontrar diferentes formas de implementar las notificaciones de pipelines de azure devops en otra forma que no sea notificaciones a Teams, o sea, usando otros sistemas como Google chat o slack. en las primeras versiones se encontrara la version para google chat y en futuras ervoluciones implementaciones para mas sistemas de chat corporativos. 
+In this repo you will find different ways to implement azure devops pipeline notifications other than Teams notifications, that is, using other systems such as Google chat or slack. In the first versions you will find the version for google chat and in future releases implementations for more corporate chat systems.
 
 ---
 
 ## Google Chat
 
-Para el uso del archivo correspondiente a esta herramienta, debes entrar a la carpeta _files_ y ahi encontras la carpeta con el nombre _google-chat_. Dentro de ella encontraras un solo archivo el cual contiene la ejecucion de un archivo bash, el cual configura una _card_ para ser enviada por medio de una peticion POST al Webhook de Google Chat.
+For the use of the file corresponding to this tool, you must enter the folder _files_ and there you will find the folder with the name _google-chat_. Inside it you will find a single file which contains the execution of a bash file, which configures a card to be sent by means of a POST request to the Google Chat Webhook.
 
 #### Recomendaciones:
 
-- Se deben configurar 3 variables VITALES para el funcionamiento de la tarea, estos deben hacerse ya sea con configuracion de variables de entorno al momento de ejecutar el stage, ya sea dentro de un grupo de variables, o poniendolas cada una al momento de ejecucion.
+- 3 VITAL variables must be configured for the operation of the task, these must be done either by setting environment variables at the time of executing the stage, either within a group of variables, or by setting each one at the time of execution.
 
 ```bash
     webHookUrl=$(webhook-url)
@@ -18,40 +18,40 @@ Para el uso del archivo correspondiente a esta herramienta, debes entrar a la ca
     stage=$(stage)
 ```
 
-- La primera variable (webHookUrl) la vas a obtener, creando un grupo de chat tipo anuncios en el google chat:
+- The first variable (webHookUrl) you are going to get, creating a chat group type ads in google chat:
 
 ![alt text](images-readme/image.png)
 
-una vez este creado, debes ir a la parte de configuraciones del espacio, luego a la parte de aplicaciones e integraciones y ahi te encontraras con el apartado de webhooks, procedemos a crear uno
+once it is created, you must go to the space settings, then to the applications and integrations section and there you will find the webhooks section, proceed to create one.
 
 ![alt text](images-readme/image3.png)
 
-Creando el webhook:
+Creating the webhook:
 
 ![alt text](images-readme/image4.png)
 
-_nota: puedes configurarle un avatar si lo deseas, esto lo puedes hacer dando clic aca --> [GRAVATAR](https://vinicius73.github.io/gravatar-url-generator/#/)_
+_note: you can configure an avatar if you wish, this can be done by clicking here --> [GRAVATAR](https://vinicius73.github.io/gravatar-url-generator/#/)_
 
 ![alt text](images-readme/image2.png)
 
-Una vez creado, copiamos la url y debemos pasarla por el siguiente conversor para que nos funcione sin problema: 
+Once created, we copy the url and we must pass it through the following converter so that it works without problem: 
 
 [CONVERSOR](https://onlinelinuxtools.com/escape-shell-characters)
 
 ![alt text](images-readme/image5.png)
-Ya este es el valor necesario para usarlo en la variable webHookUrl
+Already this is the value needed to use it in the webHookUrl variable.
 
-- Para el siguiente valor el cual es la URL del repositorio de Azure DevOps, debe ponerse la URL del proyecto de Azure DevOps de la siguiente manera:
+- For the next value which is the URL of the Azure DevOps repository, the URL of the Azure DevOps project should be set as follows:
 
         https://dev.azure.com/{Organization}/{Project}
 
-- Para la ultima variable, ya es algo que se pone para mas orden en el momento de las notificaciones ya que informa el ambiente en el cual se esta ejecutan el pipeline, dando mas informacion. 
+- For the last variable, it is already something that is put for more order at the time of the notifications since it informs the environment in which the pipeline is being executed, giving more information. 
 
-Este es el resultado final de la card creada y como se ve notificando:
+This is the final result of the card created and how it looks like on notification:
 
 ![alt text](images-readme/image7.png)
 
-Tambien notifica cuando el pipeline falla y cuando termina con errores:
+It also notifies when the pipeline fails and when it ends with errors:
 
 ![alt text](images-readme/image6.png)
 
