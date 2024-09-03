@@ -55,4 +55,4 @@ It also notifies when the pipeline fails and when it ends with errors:
 
 ![alt text](images-readme/image6.png)
 
-_NOTA: El desarrollo de implementacion del boton de Sonarcloud esta en fase beta, una vez haya estabilidad subire la version_
+_NOTE: The development of the Sonarcloud button implementation is in beta phase, once it is stable I will upload the version_
