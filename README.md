@@ -1,4 +1,4 @@
-# Notificaciones para azure pipelines
+# Azure pipeline notifications
 ---
 In this repo you will find different ways to implement azure devops pipeline notifications other than Teams notifications, that is, using other systems such as Google chat or slack. In the first versions you will find the version for google chat and in future releases implementations for more corporate chat systems.
 
